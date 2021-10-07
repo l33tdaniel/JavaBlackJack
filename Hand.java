@@ -41,8 +41,14 @@ public class Hand {
   //Prints out the Hand 
   public String toString() {
     String toReturn = "";
-    for(int i = 0; i < hand.size(); i++) {
-      toReturn += hand.get(i).toString();
+    // String[][] cardStrings = new int[hand.size];
+    for(int j = 0; j < 5;j++){
+      for(int i = 0; i < hand.size(); i++) {
+        toReturn += hand.get(i).asString(j);
+        toReturn += " ";
+      }
+
+      if(j != 4){toReturn += "\n";}
     }
     return toReturn; 
   }

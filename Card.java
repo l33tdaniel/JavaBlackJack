@@ -23,7 +23,7 @@ public class Card{
   }
 
 //Print Method  
-	public String toString(){
+	public String asString(int i){
     String suitSymbol = "";
     if(suit == "spades"){
 			suitSymbol = "♠ ";
@@ -52,11 +52,12 @@ public class Card{
 			numberString = "Q ";
 		}
 
-    String toReturn = "┌──────┐\n";
-    toReturn += "│ " + numberString + " " + suitSymbol + "│\n";
-    toReturn += "│      │\n";
-    toReturn += "│ " + suitSymbol + " " + numberString + "│\n";
-    toReturn += "└──────┘\n";
-    return toReturn;
+    String[] toReturn = new String[]{
+      "┌──────┐",
+      "│ " + numberString + " " + suitSymbol + "│",
+      "│      │",
+      "│ " + suitSymbol + " " + numberString + "│",
+      "└──────┘"};
+    return toReturn[i];
 	}
 }

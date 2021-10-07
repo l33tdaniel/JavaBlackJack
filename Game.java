@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class Game {
   public Scanner input = new Scanner(System.in);
@@ -15,22 +14,18 @@ public class Game {
 
 //Game Initializer
   public Game() {
-
     Start();
-
     while (isPlaying) {
       Deal();
       int hasFinished = 1;
       input.nextLine();
+      Update("A new round has begun!!!");
+      System.out.println("What would you like to do?");
+      System.out.print("Hit or Stand?: ");
       while (hasFinished == 1) {
-
-        System.out.println("What would you like to do?");
-        System.out.print("Hit or Stand?: ");
         command = input.nextLine();
         hasFinished = Action(command);
-
       }
-
       if (hasFinished == 2) {
         Play_Computer();
       }
@@ -40,7 +35,7 @@ public class Game {
     }
   }
 
-//Start the game
+//prints the welcome method and shuffles the deck
   public void Start() {
     System.out.println("♣ ♥ ♠ ♦ ♣ ♥ ♠ ♦ ♣ ♥ ♠ ♦ ♣ ♥ ♠ ♦");
     System.out.println("Welcome to blackjack!");
@@ -59,77 +54,97 @@ public class Game {
   // returns 2 if the computer needs to go(stand)
   public int Action(String command) {
     if (command.equals("Hit")) {
+      clear();
       player.add(game_deck.deal());
-      System.out.println("You now have \n" + player);
-      System.out.println("The computer has " + computer);
-      System.out.println("Your Score: " + player.check());
-      System.out.println("Computer Score: " + computer.check());
       if (player.check() > 21) {
-        System.out.println("You Busted :( you lost " + bet + " credits...");
+        clear();
+        Update("You Busted :( you lost " + bet + " credits...");
         balance -= bet;
         return 0;
       } else if (player.check() == 21) {
-        System.out.println("You won because you hit 21: you won " + (bet * 2) + " credits!");
+        clear();
+        Update("You won because you hit 21: you won " + (bet * 2) + " credits!");
         balance += bet * 2;
         return 0;
       } else {
+        clear();
+        Update("You Hit!");
+        System.out.println("What would you like to do?");
+        System.out.print("Hit or Stand?: ");
         return 1;
       }
     } else if (command.equals("Stand")) {
+      clear();
+      System.out.println("You turn is over. It is now the computer's turn");
       return 2;
     }
+    return 2;
+  }
 
-    return 4;
+  void Update(String update){
+    System.out.println(update);
+    System.out.println("You are betting " + bet);
+    System.out.println("You have a total of " + player.check() + " with the cards " + "\n" + player);
+    System.out.println("The computer has a total of " + computer.check() + " with the cards \n" + computer);
   }
 
   public void Play_Computer() {
     if (computer.check() == 21) {
-      System.out.println("The Computer Hits BlackJack and you lose " + bet + " credits...");
+      clear();
+      Update("The Computer Hits BlackJack and you lose " + bet + " credits...");
       balance -= bet;
       return;
     } else if (computer.check() > 21) {
-      System.out.println("The Computer Busts and You win " + bet + " credits!");
+      clear();
+      Update("The Computer Busts and You win " + bet + " credits!");
       balance += bet;
       return;
     }
 
     if (computer.check() > 17) {
       if (computer.check() == player.check()) {
-        System.out.println("TiE!!!! you lost 0 credits");
+        clear();
+        Update("TiE!!!! you lost 0 credits");
         return;
       } else if (computer.check() > player.check()) {
-        System.out.println("Computer has a higher score! you lose " + bet + " credits XD");
+        clear();
+        Update("Computer has a higher score! you lose " + bet + " credits XD");
         balance -= bet;
         return;
       } else {
-        System.out.println("You WIN! You won " + bet + " credits");
+        clear();
+        Update("You WIN! You won " + bet + " credits");
         balance += bet;
         return;
       }
     }
     while (computer.check() <= 17) {
       computer.add(game_deck.deal());
-      System.out.println("The Computer Hits! his deck is \n" + computer);
 
       if (computer.check() == 21) {
-        System.out.println("The Computer Hits Blackjack and you lose " + bet + " credits...");
+        clear();
+        Update("The Computer Hits Blackjack and you lose " + bet + " credits...");
         balance -= bet;
         return;
       } else if (computer.check() > 21) {
-        System.out.println("The Computer Busts and you win " + bet + " credits!");
+        clear();
+        Update("The Computer Busts and you win " + bet + " credits!");
         balance += bet;
         return;
       }
     }
     if (computer.check() == player.check()) {
-      System.out.println("TiE!!!! you lost 0 credits");
+      clear();
+      Update("TiE!!!! you lost 0 credits");
       return;
     } else if (computer.check() > player.check()) {
-      System.out.println("Computer has a higher score! you lose " + bet + " credits XD");
+      clear();
+      Update("Computer has a higher score! you lose " + bet + " credits XD");
       balance -= bet;
       return;
     } else {
-      System.out.println("You WIN! You won " + bet + " credits");
+      clear();
+      Update("You WIN! You won " + bet + " credits");
       balance += bet;
       return;
     }
@@ -154,16 +169,15 @@ public class Game {
       System.out.print("Invalid Amount... Try Again: ");
       bet = input.nextInt();
     }
-
-    System.out.println("Okay... Let's Do This!");
+    clear();
 
     player.add(game_deck.deal());
     computer.add(game_deck.deal());
     player.add(game_deck.deal());
     computer.add(game_deck.deal());
 
-    System.out.println("Your cards \n" + player);
-    System.out.println("The computer has \n" + computer);
+    // System.out.println("Your cards \n" + player);
+    // System.out.println("The computer has \n" + computer);
   }
 
 }
