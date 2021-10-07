@@ -24,6 +24,7 @@ public class Game {
       System.out.print("Hit or Stand?: ");
       while (hasFinished == 1) {
         command = input.nextLine();
+        command = command.toLowerCase();
         hasFinished = Action(command);
       }
       if (hasFinished == 2) {
@@ -53,7 +54,7 @@ public class Game {
   // returns 1 if we need to do the next loop(hit)
   // returns 2 if the computer needs to go(stand)
   public int Action(String command) {
-    if (command.equals("Hit")) {
+    if (command.equals("hit")) {
       clear();
       player.add(game_deck.deal());
       if (player.check() > 21) {
@@ -73,7 +74,7 @@ public class Game {
         System.out.print("Hit or Stand?: ");
         return 1;
       }
-    } else if (command.equals("Stand")) {
+    } else if (command.equals("stand")) {
       clear();
       System.out.println("You turn is over. It is now the computer's turn");
       return 2;
@@ -82,10 +83,10 @@ public class Game {
   }
 
   void Update(String update){
-    System.out.println(update);
     System.out.println("You are betting " + bet);
     System.out.println("You have a total of " + player.check() + " with the cards " + "\n" + player);
     System.out.println("The computer has a total of " + computer.check() + " with the cards \n" + computer);
+    System.out.println(update);
   }
 
   public void Play_Computer() {
