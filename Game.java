@@ -18,6 +18,10 @@ public class Game {
     while (isPlaying) {
       Deal();
       int hasFinished = 1;
+      if(player.check() == 21)  {
+        Update("You hit 21!!");
+        hasFinished = 3;
+      }
       input.nextLine();
       Update("A new round has begun!!!");
       System.out.println("What would you like to do?");
